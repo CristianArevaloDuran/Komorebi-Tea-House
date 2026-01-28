@@ -3,8 +3,7 @@ import PageLoader from "./components/PageLoader.jsx";
 import { useState } from "react"
 import { useEffect } from "react";
 import { lazy } from "react";
-
-const Hero = lazy(() => import('./components/Hero.jsx'))
+import Hero from "./components/Hero.jsx";
 
 export default function App() {
   const [contentLoading, setContentLoading] = useState(true);
