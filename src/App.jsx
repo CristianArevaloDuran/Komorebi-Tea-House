@@ -2,12 +2,11 @@ import Nav from "./components/Nav"
 import PageLoader from "./components/PageLoader.jsx";
 import { useState } from "react"
 import { useEffect } from "react";
-import { lazy } from "react";
 import Hero from "./components/Hero.jsx";
+import imgTexture from "/textures/paper.jpg"
 
 export default function App() {
   const [contentLoading, setContentLoading] = useState(true);
-  const [imgLoaded, setImgLoaded] = useState(false);
 
   useEffect(() => {
     const handleFullyLoaded = () => {
@@ -18,9 +17,8 @@ export default function App() {
 
     if (document.readyState === 'complete') {
       const img = new Image();
-      img.src = '/icon.webp';
+      img.src = imgTexture;
       img.onload = () => {
-        setImgLoaded(true)
         handleFullyLoaded();
       }
     } else {
