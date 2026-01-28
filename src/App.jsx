@@ -1,6 +1,5 @@
 import Nav from "./components/Nav"
 import PageLoader from "./components/PageLoader.jsx";
-import { Suspense } from "react"
 import { useState } from "react"
 import { useEffect } from "react";
 import { lazy } from "react";
@@ -8,17 +7,23 @@ import { lazy } from "react";
 const Hero = lazy(() => import('./components/Hero.jsx'))
 
 export default function App() {
-  const [contentReady, setContentReady] = useState(true);
+  const [contentLoading, setContentLoading] = useState(true);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   useEffect(() => {
     const handleFullyLoaded = () => {
       setTimeout(() => {
-        setContentReady(false);
-      }, 1000)
+        setContentLoading(false);
+      }, 500)
     }
 
     if (document.readyState === 'complete') {
-      handleFullyLoaded();
+      const img = new Image();
+      img.src = '/icon.webp';
+      img.onload = () => {
+        setImgLoaded(true)
+        handleFullyLoaded();
+      }
     } else {
       window.addEventListener('load', handleFullyLoaded);
       return () => window.removeEventListener('load', handleFullyLoaded)
@@ -28,12 +33,16 @@ export default function App() {
 
   return (
     <>
-      <Suspense fallback={<PageLoader />}>
-        <main>
-          <Nav />
-          <Hero />
-        </main>
-      </Suspense>
+      {
+        contentLoading ? (
+          <PageLoader />
+        ) : (
+          <main>
+            <Nav />
+            <Hero />
+          </main>
+        )
+      }
     </>
   )
 }
