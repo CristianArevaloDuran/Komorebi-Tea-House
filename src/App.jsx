@@ -10,9 +10,7 @@ export default function App() {
 
   useEffect(() => {
     const handleFullyLoaded = () => {
-      setTimeout(() => {
-        setContentLoading(false);
-      }, 500)
+      setContentLoading(false)
     }
 
     if (document.readyState === 'complete') {
