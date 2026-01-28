@@ -7,10 +7,15 @@ import imgTexture from "/textures/paper.jpg"
 
 export default function App() {
   const [contentLoading, setContentLoading] = useState(true);
+  const [showLoader, setShowLoader] = useState(true);
+  const [contentLoaded, setContentLoaded] = useState(false);
 
   useEffect(() => {
     const handleFullyLoaded = () => {
-      setContentLoading(false)
+      setTimeout(()=>{
+        setContentLoading(false)
+        setContentLoaded(true)
+      }, 1000)
     }
 
     if (document.readyState === 'complete') {
@@ -29,15 +34,16 @@ export default function App() {
   return (
     <>
       {
-        contentLoading ? (
-          <PageLoader />
-        ) : (
-          <main>
-            <Nav />
-            <Hero />
-          </main>
+        showLoader && (
+          <PageLoader ready={contentLoaded} onFinish={()=>setShowLoader(false)}  />
         )
       }
+      
+      <main className={showLoader ? 'overflow-hidden' : ''}>
+        <Nav start={showLoader} />
+        <Hero />
+      </main>
+      
     </>
   )
 }

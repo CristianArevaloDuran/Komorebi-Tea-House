@@ -8,12 +8,14 @@ import logo from '/icon.webp'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
-export default function Nav() {
+export default function Nav({start}) {
+    
     const navRef = useRef(null)
-
-
+    
     useGSAP(() => {
-
+        
+        if(start) return
+        
         SplitText.create(navRef.current.querySelector('a p'), {
             type: "chars, words",
         })
@@ -58,7 +60,8 @@ export default function Nav() {
                 scale: .95
             }, '<')
     }, {
-        scope: navRef
+        scope: navRef,
+        dependencies: [start]
     })
 
     const onMouseEnter = () => {
@@ -142,7 +145,7 @@ export default function Nav() {
     }
 
     return (
-        <nav>
+        <nav className={start ? 'opacity-0':'opacity-100'}>
             <div id="nav" ref={navRef}>
                 <a href="#home" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} onFocus={onMouseEnter} onBlur={onMouseLeave}>
                     <img draggable={false} src={logo} alt="icon" />
