@@ -1,0 +1,74 @@
+@import 'tailwindcss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+@font-face {
+    font-family: 'Sakuna';
+    src: url('/fonts/SAKUNA.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Japanese';
+    src: url('/fonts/Japanese.ttf') format('truetype');
+}
+
+@theme {
+    --font-sakuna: 'Sakuna', sans-serif;
+    --font-japanese: 'Japanese', sans-serif;
+    --font-quicksand: 'Quicksand', sans-serif;
+}
+
+@utility pre {
+    @apply absolute top-[-20px]
+}
+
+@layer components {
+    main {
+        @apply w-full h-[300vh] bg-black;
+    }
+
+    nav {
+        @apply z-50 w-full flex flex-row justify-center fixed;
+        
+        #nav {
+            @apply flex flex-row justify-between items-center w-full !px-10 !py-7 justify-self-center self-center;
+
+            a {
+                @apply flex flex-row items-center justify-center gap-1 text-white;
+
+                img {
+                    @apply w-8 h-8;
+                }
+            }
+            
+            ul {
+                @apply flex flex-row items-center justify-center gap-5;
+
+                li {
+                    @apply list-none;
+
+                    a {
+                        @apply font-quicksand font-bold;
+
+                        p {
+                            @apply pointer-events-none
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .texture {
+        @apply absolute inset-0 bg-cover size-full bg-[url('/textures/paper.jpg')]
+    }
+
+    #home {
+        @apply relative
+    }
+}
