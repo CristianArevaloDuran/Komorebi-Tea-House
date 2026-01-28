@@ -4,6 +4,7 @@ import { useGSAP } from "@gsap/react"
 import { useRef } from "react"
 import SplitText from "gsap/SplitText"
 import ScrollTrigger from "gsap/ScrollTrigger"
+import logo from '/icon.webp'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
@@ -13,25 +14,17 @@ export default function Nav() {
 
     useGSAP(() => {
 
-        const split = SplitText.create(navRef.current.querySelector('a p'), {
+        SplitText.create(navRef.current.querySelector('a p'), {
             type: "chars, words",
         })
 
-        const navTl = gsap.timeline({
-            scrollTrigger: {
-                scrub: 1.5,
-                pin: true,
-                start: 'top top',
-                end: '+=200vh'
-            }
-        })
-
+        
         gsap.from('ul li', {
             y: 10,
             ease: 'back.out(1.7)',
             opacity: 0,
             stagger: .05,
-            delay: 0.3,
+            delay: 0.5,
         })
         gsap.from('.font-japanese div', {
             y: 10,
@@ -39,13 +32,22 @@ export default function Nav() {
             duration: .7,
             ease: "back.out",
             stagger: 0.03,
-            delay: 0.3,
+            delay: 0.5,
         })
         gsap.from('img', {
             scale: 0,
-            duration: 0.5,
+            duration: .5,
             ease: "back.out(1.7)",
-            delay: 0.2,
+            delay: 0.5,
+        })
+        
+        const navTl = gsap.timeline({
+            scrollTrigger: {
+                scrub: 1.5,
+                pin: true,
+                start: 'top top',
+                end: '+=200vh'
+            }
         })
 
         navTl
@@ -140,7 +142,7 @@ export default function Nav() {
         <nav>
             <div id="nav" ref={navRef}>
                 <a href="#home" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} onFocus={onMouseEnter} onBlur={onMouseLeave}>
-                    <img draggable={false} src="/icon.webp" alt="icon" />
+                    <img draggable={false} src={logo} alt="icon" />
                     <div className="relative">
                         <p className="font-japanese text-white">木漏れ日</p>
                         <p className="text-sm font-sakuna absolute top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] opacity-0">Komorebi</p>
