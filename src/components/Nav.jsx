@@ -46,7 +46,7 @@ export default function Nav() {
                 scrub: 1.5,
                 pin: true,
                 start: 'top top',
-                end: '+=200vh'
+                end: '+=200vh',
             }
         })
 
@@ -118,24 +118,27 @@ export default function Nav() {
         const buttonTl = gsap.timeline();
 
         buttonTl
-        .to(prev, {
-            y: 20,
-            duration: .5,
-            clearProps: 'y',
-            onComplete: () => {
-                prev.classList.remove('pre');
-                prev.classList.add('pos');
-            }
-        })
         .to(pos, {
             y: 20,
             clearProps: 'y',
             duration: .5,
+            ease: 'back.out',
             onComplete: () => {
                 pos.classList.add('pre');
                 pos.classList.remove('pos');
             }
+        })
+        .to(prev, {
+            y: 20,
+            duration: .5,
+            clearProps: 'y',
+            ease: 'back.out',
+            onComplete: () => {
+                prev.classList.remove('pre');
+                prev.classList.add('pos');
+            }
         }, '<')
+        
     }
 
     return (
