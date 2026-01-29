@@ -73,7 +73,7 @@
     }
 
     #home {
-        @apply flex flex-col items-center w-full min-h-dvh overflow-x-hidden overflow-y-hidden;
+        @apply flex flex-col items-center w-full min-h-[300vh] overflow-x-hidden overflow-y-hidden;
 
         .gradient-text {
             background: linear-gradient(0deg,rgb(224, 255, 158) 0%, rgba(129, 168, 71, 1) 50%, var(--third-color) 100%);
@@ -83,15 +83,15 @@
         }
 
         img {
-            @apply absolute;
+            @apply absolute pointer-events-none selection:bg-transparent;
         }
 
         .left-leaf {
-            @apply left-[-100px] top-[60vh] rotate-70 scale-120 pointer-events-none;
+            @apply left-[-100px] top-[60vh] rotate-70 scale-120 ;
         }
 
         .right-leaf {
-            @apply right-[-100px] top-[20vh] rotate-290 scale-140 pointer-events-none;
+            @apply right-[-100px] top-[20vh] rotate-290 scale-140;
         }
         
         h1 {

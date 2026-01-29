@@ -2,11 +2,12 @@ import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { useRef } from "react"
 import SplitText from "gsap/SplitText";
+import ScrollTrigger from "gsap/ScrollTrigger";
 import teaLeaf1 from "/images/tea-leaf.png";
 import teaLeaf2 from "/images/tea-leaf-2.png";
 
 
-gsap.registerPlugin(SplitText);
+gsap.registerPlugin(SplitText, ScrollTrigger);
 
 export default function Hero({start}) {
 
@@ -21,7 +22,9 @@ export default function Hero({start}) {
 
         split.chars.forEach((char) => char.classList.add('gradient-text'))
 
-        const titleTl = gsap.timeline();
+        const titleTl = gsap.timeline({
+            immediateRender: true
+        });
 
         titleTl
             .from('.left-leaf', {
@@ -48,13 +51,40 @@ export default function Hero({start}) {
                 stagger: .06,
                 delay: 0.4,
                 ease: 'back.out'
-            }, '<')
+            }, '-=0.3')
             .from('p', {
                 y: 30,
                 duration: .7,
                 autoAlpha: 0,
                 delay: 0.4
             }, '<')
+
+        const scrollTl = gsap.timeline({
+            scrollTrigger: {
+                invalidateOnRefresh: true,
+                scrub: 2,
+                start: 'top top',
+                end: '+=500vh'
+            }
+        })
+
+        scrollTl
+            .fromTo('.left-leaf', {
+                y: 0,
+                x: 0
+            }, {
+                y: -100,
+                x: 20
+            })
+            .fromTo('.right-leaf', {
+                y: 0,
+                x: 0
+            }, {
+                y: 100,
+                x: -20
+            }, '<')
+        
+        ScrollTrigger.refresh()
     }, {
         scope: sectionRef,
         dependencies: [start]

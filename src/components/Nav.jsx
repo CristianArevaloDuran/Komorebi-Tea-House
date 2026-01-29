@@ -53,11 +53,11 @@ export default function Nav({start}) {
 
         navTl
             .to(navRef.current, {
-                y: 30
-            })
-            .to(navRef.current, {
+                y: 30,
                 scale: .95
-            }, '<')
+            })
+
+        ScrollTrigger.refresh()
     }, {
         scope: navRef,
         dependencies: [start]
