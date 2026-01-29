@@ -21,6 +21,10 @@
     --font-sakuna: 'Sakuna', sans-serif;
     --font-japanese: 'Japanese', sans-serif;
     --font-quicksand: 'Quicksand', sans-serif;
+    --primary-color: #1a1a1a;
+    --secondary-color: #f9f9f9;
+    --third-color: #4a5d23;
+    --accent-color: #ffacd1;
 }
 
 @utility pre {
@@ -29,17 +33,17 @@
 
 @layer components {
     main {
-        @apply w-full h-dvh bg-black;
+        @apply w-full min-h-dvh bg-(--primary-color);
     }
 
     nav {
-        @apply z-50 w-full flex flex-row justify-center fixed;
+        @apply z-50 w-full pointer-events-none flex flex-row justify-center fixed;
         
         #nav {
             @apply flex flex-row justify-between items-center w-full !px-10 !py-7 justify-self-center self-center;
 
             a {
-                @apply flex flex-row items-center justify-center gap-1 text-white;
+                @apply flex flex-row pointer-events-auto items-center justify-center gap-1 text-white;
 
                 img {
                     @apply w-8 h-8;
@@ -65,12 +69,37 @@
     }
 
     .texture {
-        @apply absolute inset-0 bg-cover size-full bg-[url('/textures/paper.jpg')]
+        @apply relative isolate before:absolute before:w-full before:h-full before:-inset-0 before:opacity-30 before:bg-cover before:bg-repeat-y before:bg-top before:bg-[url('/textures/texture.jpg')] before:z-[-1] ;
     }
 
     #home {
-        @apply relative w-full h-[300vh];
+        @apply flex flex-col items-center w-full min-h-dvh overflow-x-hidden overflow-y-hidden;
 
+        .gradient-text {
+            background: linear-gradient(0deg,rgb(224, 255, 158) 0%, rgba(129, 168, 71, 1) 50%, var(--third-color) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            filter: drop-shadow(5px 5px #899a79);
+        }
 
+        img {
+            @apply absolute;
+        }
+
+        .left-leaf {
+            @apply left-[-100px] top-[60vh] rotate-70 scale-120 pointer-events-none;
+        }
+
+        .right-leaf {
+            @apply right-[-100px] top-[20vh] rotate-290 scale-140 pointer-events-none;
+        }
+        
+        h1 {
+            @apply font-japanese font-bold text-9xl text-transparent tracking-[50px] !mr-[-50px] !mt-[150px];
+        }
+        p {
+            @apply font-sakuna text-[#bbcfbb] !mt-[30px] text-2xl tracking-[20px] !mr-[-20px];
+        }
+        
     }
 }

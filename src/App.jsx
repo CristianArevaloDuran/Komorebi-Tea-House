@@ -3,7 +3,7 @@ import PageLoader from "./components/PageLoader.jsx";
 import { useState } from "react"
 import { useEffect } from "react";
 import Hero from "./components/Hero.jsx";
-import imgTexture from "/textures/paper.jpg"
+import imgTexture from "/textures/texture.jpg"
 
 export default function App() {
   const [contentLoading, setContentLoading] = useState(true);
@@ -39,7 +39,7 @@ export default function App() {
       
       <main className={showLoader ? 'overflow-hidden' : ''}>
         <Nav start={showLoader} />
-        <Hero />
+        <Hero start={showLoader} />
       </main>
       
     </>

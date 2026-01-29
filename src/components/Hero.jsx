@@ -1,8 +1,78 @@
-export default function Hero() {
+import { useGSAP } from "@gsap/react"
+import gsap from "gsap"
+import { useRef } from "react"
+import SplitText from "gsap/SplitText";
+import teaLeaf1 from "/images/tea-leaf.png";
+import teaLeaf2 from "/images/tea-leaf-2.png";
+
+
+gsap.registerPlugin(SplitText);
+
+export default function Hero({start}) {
+
+    const sectionRef = useRef(null);
+    
+    useGSAP(()=>{
+        if(start) return;
+
+        const split = SplitText.create('h1', {
+            type: 'chars words'
+        })
+
+        split.chars.forEach((char) => char.classList.add('gradient-text'))
+
+        const titleTl = gsap.timeline();
+
+        titleTl
+            .from('.left-leaf', {
+                x: -100,
+                rotate: 20,
+                duration: .5,
+                scale: .6,
+                autoAlpha: 0,
+                delay: 0.2,
+                ease: 'back.out'
+            })
+            .from('.right-leaf', {
+                x: 100,
+                rotate: -50,
+                duration: .5,
+                scale: .6,
+                autoAlpha: 0,
+                ease: 'back.out'
+            }, '<')
+            .from(split.chars, {
+                y:100,
+                opacity: 0,
+                duration: .8,
+                stagger: .06,
+                delay: 0.4,
+                ease: 'back.out'
+            }, '<')
+            .from('p', {
+                y: 30,
+                duration: .7,
+                autoAlpha: 0,
+                delay: 0.4
+            }, '<')
+    }, {
+        scope: sectionRef,
+        dependencies: [start]
+    })
+
     return (
         <>
-            <section id="home" className="texture hero">
-                <h1>Hola</h1>
+            <section ref={sectionRef} id="home" className={`texture hero`}>
+                {
+                    start ? <></> :
+                    <>
+                        <img className='left-leaf' src={teaLeaf1} alt="tea-leaf" draggable={false} />
+                        <img className='right-leaf' src={teaLeaf2} alt="tea-leaf" draggable={false} />
+                        <h1>木漏れ日</h1>
+                        <p>Komorebi Tea House</p>
+                    </>
+                }
+                
             </section>
         </>
     )

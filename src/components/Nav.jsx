@@ -12,7 +12,7 @@ export default function Nav({start}) {
     
     const navRef = useRef(null)
     
-    useGSAP(() => {
+    const { contextSafe } = useGSAP(() => {
         
         if(start) return
         
@@ -26,7 +26,7 @@ export default function Nav({start}) {
             ease: 'back.out(1.7)',
             opacity: 0,
             stagger: .05,
-            delay: 0.5,
+            delay: 1,
         })
         gsap.from('.font-japanese div', {
             y: 10,
@@ -34,19 +34,18 @@ export default function Nav({start}) {
             duration: .7,
             ease: "back.out",
             stagger: 0.03,
-            delay: 0.5,
+            delay: 1,
         })
         gsap.from('img', {
             scale: 0,
             duration: .5,
             ease: "back.out(1.7)",
-            delay: 0.5,
+            delay: 1,
         })
         
         const navTl = gsap.timeline({
             scrollTrigger: {
                 scrub: 1.5,
-                pin: true,
                 start: 'top top',
                 end: '+=200vh',
             }
@@ -64,11 +63,13 @@ export default function Nav({start}) {
         dependencies: [start]
     })
 
-    const onMouseEnter = () => {
+    const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim();
+
+    const onMouseEnter = contextSafe(() => {
         gsap.timeline()
         .to('.font-japanese div', {
             y: -4,
-            color: "#ffacd1",
+            color: accentColor,
             duration: 0.3,
             ease: "back.out",
             stagger: 0.03
@@ -85,9 +86,9 @@ export default function Nav({start}) {
             ease: "back.out",
             rotate: 15,
         }, "<")
-    }
+    })
 
-    const onMouseLeave = () => {
+    const onMouseLeave = contextSafe(() => {
         gsap.timeline()
         .to('.font-japanese div', {
             y: 0,
@@ -109,9 +110,9 @@ export default function Nav({start}) {
             ease: "back.out",
             rotate: 0,
         }, "<")
-    }
+    })
 
-    const onMouseEnterButton = (e) => {
+    const onMouseEnterButton = contextSafe((e) => {
         
         if(gsap.isTweening(e.target)) return
 
@@ -142,7 +143,7 @@ export default function Nav({start}) {
             }
         }, '<')
         
-    }
+    })
 
     return (
         <nav className={start ? 'opacity-0':'opacity-100'}>
