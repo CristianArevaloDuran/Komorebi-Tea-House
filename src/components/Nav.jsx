@@ -4,9 +4,10 @@ import { useGSAP } from "@gsap/react"
 import { useRef } from "react"
 import SplitText from "gsap/SplitText"
 import ScrollTrigger from "gsap/ScrollTrigger"
+import ScrollToPlugin from "gsap/ScrollToPlugin"
 import logo from '/icon.webp'
 
-gsap.registerPlugin(ScrollTrigger, SplitText)
+gsap.registerPlugin(ScrollTrigger, SplitText, ScrollToPlugin)
 
 export default function Nav({start}) {
     
@@ -57,10 +58,25 @@ export default function Nav({start}) {
                 scale: .95
             })
 
+
         ScrollTrigger.refresh()
     }, {
         scope: navRef,
         dependencies: [start]
+    })
+
+    const scrollToSection = contextSafe((e, targetId) => {
+        e.preventDefault();
+
+        const stId = ScrollTrigger.getById(targetId.replace('#', ''));
+
+        gsap.to(window, {
+            duration: 1.2,
+            scrollTo: {
+                y: stId.start,
+                autoKill: true
+            }
+        })
     })
 
     const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim();
@@ -148,7 +164,13 @@ export default function Nav({start}) {
     return (
         <nav className={start ? 'opacity-0':'opacity-100'}>
             <div id="nav" ref={navRef}>
-                <a href="#home" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} onFocus={onMouseEnter} onBlur={onMouseLeave}>
+                <a href="#home" 
+                    onClick={(e) => scrollToSection(e, '#home')}
+                    onMouseEnter={onMouseEnter} 
+                    onMouseLeave={onMouseLeave} 
+                    onFocus={onMouseEnter} 
+                    onBlur={onMouseLeave}
+                >
                     <img draggable={false} src={logo} alt="icon" />
                     <div className="relative">
                         <p className="font-japanese text-white">木漏れ日</p>
@@ -158,7 +180,9 @@ export default function Nav({start}) {
                 <ul>
                     {sections.map((section) => (
                         <li key={section.id} onMouseEnter={onMouseEnterButton}>
-                            <a className="relative overflow-hidden" href={`#${section.id}`}>
+                            <a className="relative overflow-hidden" href={`#${section.id}`}
+                            onClick={(e) => scrollToSection(e, `#${section.id}`)}
+                            >
                                 <p className="pre">{section.title}</p>
                                 <p className="pos">{section.title}</p>
                             </a>

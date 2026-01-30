@@ -4,8 +4,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  scroll-behavior: smooth;
 }
+
+body {
+    overflow: hidden;
+    scrollbar-gutter: stable;
+}
+
 
 @font-face {
     font-family: 'Sakuna';
@@ -32,8 +37,13 @@
 }
 
 @layer components {
+
+    .texture {
+        @apply relative isolate before:absolute before:w-full before:h-full before:-inset-0 before:opacity-30 before:bg-cover before:bg-repeat-y before:bg-top before:bg-[url('/textures/texture.webp')] before:z-[-1] ;
+    }
+
     main {
-        @apply w-full min-h-dvh bg-(--primary-color);
+        @apply w-full min-h-dvh bg-(--primary-color) overflow-hidden;
     }
 
     nav {
@@ -68,12 +78,8 @@
         }
     }
 
-    .texture {
-        @apply relative isolate before:absolute before:w-full before:h-full before:-inset-0 before:opacity-30 before:bg-cover before:bg-repeat-y before:bg-top before:bg-[url('/textures/texture.jpg')] before:z-[-1] ;
-    }
-
     #home {
-        @apply flex flex-col items-center w-full min-h-[300vh] overflow-x-hidden overflow-y-hidden;
+        @apply flex flex-col justify-center items-center w-full min-h-dvh overflow-x-hidden overflow-y-hidden;
 
         .gradient-text {
             background: linear-gradient(0deg,rgb(224, 255, 158) 0%, rgba(129, 168, 71, 1) 50%, var(--third-color) 100%);
@@ -95,10 +101,15 @@
         }
         
         h1 {
-            @apply font-japanese font-bold text-9xl text-transparent tracking-[50px] !mr-[-50px] !mt-[150px];
+            @apply font-japanese font-bold text-9xl text-transparent tracking-[50px] !mr-[-50px];
         }
+
         p {
             @apply font-sakuna text-[#bbcfbb] !mt-[30px] text-2xl tracking-[20px] !mr-[-20px];
+        }
+
+        .subtext {
+            @apply font-quicksand tracking-[0] text-(--secondary-color);
         }
         
     }

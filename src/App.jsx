@@ -1,21 +1,24 @@
 import Nav from "./components/Nav"
+import Hero from "./components/Hero.jsx";
+import About from "./components/About.jsx";
 import PageLoader from "./components/PageLoader.jsx";
 import { useState } from "react"
 import { useEffect } from "react";
-import Hero from "./components/Hero.jsx";
-import imgTexture from "/textures/texture.jpg"
+import imgTexture from "/textures/texture.webp"
 
 export default function App() {
   const [contentLoading, setContentLoading] = useState(true);
   const [showLoader, setShowLoader] = useState(true);
   const [contentLoaded, setContentLoaded] = useState(false);
-
+  
   useEffect(() => {
+    
     const handleFullyLoaded = () => {
+      window.scrollTo(0, 0)
       setContentLoading(false)
       setContentLoaded(true)
     }
-
+    
     if (document.readyState === 'complete') {
       const img = new Image();
       img.src = imgTexture;
@@ -26,9 +29,9 @@ export default function App() {
       window.addEventListener('load', handleFullyLoaded);
       return () => window.removeEventListener('load', handleFullyLoaded)
     }
-
+    
   }, [])
-
+  
   return (
     <>
       {
@@ -37,7 +40,7 @@ export default function App() {
         )
       }
       
-      <main className={showLoader ? 'overflow-hidden' : ''}>
+      <main className={`${showLoader ? '!overflow-y-hidden' : ''} texture`} >
         <Nav start={showLoader} />
         <Hero start={showLoader} />
       </main>
