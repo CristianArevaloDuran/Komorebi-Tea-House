@@ -8,7 +8,6 @@
 
 body {
     overflow: hidden;
-    scrollbar-gutter: stable;
 }
 
 
@@ -79,7 +78,7 @@ body {
     }
 
     #home {
-        @apply flex flex-col justify-center items-center w-full min-h-dvh overflow-x-hidden overflow-y-hidden;
+        @apply flex flex-col justify-center items-center w-full min-h-dvh overflow-x-hidden overflow-y-hidden relative;
 
         .gradient-text {
             background: linear-gradient(0deg,rgb(224, 255, 158) 0%, rgba(129, 168, 71, 1) 50%, var(--third-color) 100%);
@@ -104,12 +103,33 @@ body {
             @apply font-japanese font-bold text-9xl text-transparent tracking-[50px] !mr-[-50px];
         }
 
-        p {
+        .subtitle {
             @apply font-sakuna text-[#bbcfbb] !mt-[30px] text-2xl tracking-[20px] !mr-[-20px];
         }
 
+        .subtext-container {
+            @apply flex flex-col justify-center items-center;
+
+            .animated-bt {
+                @apply relative font-quicksand font-bold bg-transparent text-(--secondary-color) border-(--third-color) border-4 !p-2 rounded-lg cursor-pointer !mt-5 transition-colors duration-200 ease-linear z-10 overflow-hidden;
+                box-shadow: 5px 5px  var(--secondary-color);
+            }
+
+            .animated-bt span {
+                @apply relative z-10;
+            }
+
+            .button-bg {
+                @apply absolute w-[20px] h-[20px] bg-(--third-color) z-1 rounded-[50%] pointer-events-none top-0 left-0 scale-0;
+            }
+
+            .animated-bt:hover {
+                @apply border-(--secondary-color);
+            }
+        }
+
         .subtext {
-            @apply font-quicksand tracking-[0] text-(--secondary-color);
+            @apply font-quicksand tracking-[0] text-(--secondary-color) text-center text-2xl opacity-50 !mt-3 ;
         }
         
     }

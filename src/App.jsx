@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import imgTexture from "/textures/texture.webp"
 
 export default function App() {
-  const [contentLoading, setContentLoading] = useState(true);
   const [showLoader, setShowLoader] = useState(true);
   const [contentLoaded, setContentLoaded] = useState(false);
   
@@ -15,7 +14,6 @@ export default function App() {
     
     const handleFullyLoaded = () => {
       window.scrollTo(0, 0)
-      setContentLoading(false)
       setContentLoaded(true)
     }
     
@@ -41,8 +39,14 @@ export default function App() {
       }
       
       <main className={`${showLoader ? '!overflow-y-hidden' : ''} texture`} >
-        <Nav start={showLoader} />
-        <Hero start={showLoader} />
+        {
+          showLoader ? <></> :
+          <>
+            <Nav start={showLoader} />
+            <Hero start={showLoader} />
+            <About />
+          </>
+        }
       </main>
       
     </>

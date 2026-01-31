@@ -9,13 +9,11 @@ import logo from '/icon.webp'
 
 gsap.registerPlugin(ScrollTrigger, SplitText, ScrollToPlugin)
 
-export default function Nav({start}) {
+export default function Nav() {
     
     const navRef = useRef(null)
     
     const { contextSafe } = useGSAP(() => {
-        
-        if(start) return
         
         SplitText.create(navRef.current.querySelector('a p'), {
             type: "chars, words",
@@ -61,8 +59,7 @@ export default function Nav({start}) {
 
         ScrollTrigger.refresh()
     }, {
-        scope: navRef,
-        dependencies: [start]
+        scope: navRef
     })
 
     const scrollToSection = contextSafe((e, targetId) => {
@@ -71,9 +68,9 @@ export default function Nav({start}) {
         const stId = ScrollTrigger.getById(targetId.replace('#', ''));
 
         gsap.to(window, {
-            duration: 1.2,
+            duration: 2,
             scrollTo: {
-                y: stId.start,
+                y: stId ? stId.start : targetId,
                 autoKill: true
             }
         })
@@ -162,7 +159,7 @@ export default function Nav({start}) {
     })
 
     return (
-        <nav className={start ? 'opacity-0':'opacity-100'}>
+        <nav>
             <div id="nav" ref={navRef}>
                 <a href="#home" 
                     onClick={(e) => scrollToSection(e, '#home')}

@@ -5,16 +5,16 @@ import SplitText from "gsap/SplitText";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import teaLeaf1 from "/images/tea-leaf.webp";
 import teaLeaf2 from "/images/tea-leaf-2.webp";
+import Button from "./elements/Button.jsx";
 
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
-export default function Hero({start}) {
+export default function Hero() {
 
     const sectionRef = useRef(null);
     
     useGSAP(()=>{
-        if(start) return;
 
         const split = SplitText.create('h1', {
             type: 'chars'
@@ -22,7 +22,7 @@ export default function Hero({start}) {
 
         split.chars.forEach((char) => char.classList.add('gradient-text'))
 
-        const splitP = SplitText.create('p', {
+        const splitP = SplitText.create('.subtitle', {
             type: 'chars words'
         })
 
@@ -66,14 +66,27 @@ export default function Hero({start}) {
                 stagger: .05,
                 delay: 0.4
             }, '<')
+            .from('.subtext-container', {
+                opacity: 0,
+                autoAlpha: 0,
+                y: 20,
+                delay: .4,
+                ease: 'power1.in'
+            }, '<')
 
         const homeTl = gsap.timeline({
             scrollTrigger: {
                 id: 'home',
                 scrub: 2,
                 pin: true,
+                pinSpacing: true,
                 start: 'top top',
-                end: '+=900vh',
+                end: '+=800vh',
+                snap: {
+                    snapTo: [0, 1],
+                    duration: 2, 
+                    delay: .01
+                },
                 trigger: sectionRef.current
             }
         })
@@ -84,22 +97,25 @@ export default function Hero({start}) {
                 x: 0
             }, {
                 y: -100,
-                x: 20
+                x: -80,
+                duration: 1.7
             })
             .fromTo('.right-leaf', {
                 y: 0,
                 x: 0
             }, {
                 y: 100,
-                x: -20
+                x: 80,
+                duration: 1.7
             }, '<')
             .fromTo(split.chars, {
                 y:0,
                 opacity: 1
             }, {
                 y:-100,
-                opacity: 0.5,
-                stagger: .05
+                opacity: 0,
+                stagger: .05,
+                duration: 1.5
             }, '<')
             .fromTo(splitP.words, {
                 y: 0,
@@ -107,29 +123,40 @@ export default function Hero({start}) {
             }, {
                 y: -100,
                 stagger: .05,
-                opacity: 0.2
+                opacity: 0,
+                duration: 1.5
+            }, '<')
+            .fromTo('.subtext-container', {
+                y: 0,
+                scale: 1
+            }, {
+                y:-125,
+                scale: 2,
+                ease: 'sine.inOut',
+                duration: 1.7
+            }, '<')
+            .fromTo('.subtext', {
+                opacity: .5
+            }, {
+                opacity: 1
             }, '<')
         
         ScrollTrigger.refresh()
     }, {
         scope: sectionRef,
-        dependencies: [start]
     })
 
     return (
         <>
             <section ref={sectionRef} id="home" className={`hero`}>
-                {
-                    start ? <></> :
-                    <>
-                        <img className='left-leaf' src={teaLeaf1} alt="tea-leaf" draggable={false} />
-                        <img className='right-leaf' src={teaLeaf2} alt="tea-leaf" draggable={false} />
-                        <h1>木漏れ日</h1>
-                        <p>Komorebi Tea House</p>
-                        <p className="subtext">El arte del té, filtrado por la luz de los árboles.</p>
-                    </>
-                }
-                
+                <img className='left-leaf' src={teaLeaf1} alt="tea-leaf" draggable={false} />
+                <img className='right-leaf' src={teaLeaf2} alt="tea-leaf" draggable={false} />
+                <h1>木漏れ日</h1>
+                <p className="subtitle">Komorebi Tea House</p>
+                <div className="subtext-container">
+                    <p className="subtext">El arte del té, <br /> filtrado por la luz de los árboles.</p>
+                    <Button />
+                </div>
             </section>
         </>
     )
