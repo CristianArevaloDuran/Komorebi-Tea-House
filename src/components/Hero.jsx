@@ -5,6 +5,7 @@ import SplitText from "gsap/SplitText";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import teaLeaf1 from "/images/tea-leaf.webp";
 import teaLeaf2 from "/images/tea-leaf-2.webp";
+import teaCup from "/images/tea-cup.webp";
 import Button from "./elements/Button.jsx";
 
 
@@ -47,6 +48,13 @@ export default function Hero() {
                 rotate: -50,
                 duration: .5,
                 scale: .6,
+                autoAlpha: 0,
+                ease: 'back.out'
+            }, '<')
+            .from('.tea-cup', {
+                y: 100,
+                duration: .5,
+                scale: .4,
                 autoAlpha: 0,
                 ease: 'back.out'
             }, '<')
@@ -108,12 +116,20 @@ export default function Hero() {
                 x: 80,
                 duration: 1.7
             }, '<')
+            .fromTo('.tea-cup', {
+                y: 0,
+                scale: .7
+            }, {
+                y: -150,
+                scale: 1,
+                duration: 1.7
+            }, '<')
             .fromTo(split.chars, {
                 y:0,
                 opacity: 1
             }, {
-                y:-100,
-                opacity: 0,
+                y:-200,
+                opacity: .5,
                 stagger: .05,
                 duration: 1.5
             }, '<')
@@ -121,9 +137,9 @@ export default function Hero() {
                 y: 0,
                 opacity: 1
             }, {
-                y: -100,
+                y: -200,
                 stagger: .05,
-                opacity: 0,
+                opacity: .5,
                 duration: 1.5
             }, '<')
             .fromTo('.subtext-container', {
@@ -132,8 +148,7 @@ export default function Hero() {
             }, {
                 y:-125,
                 scale: 2,
-                ease: 'sine.inOut',
-                duration: 1.7
+                duration: 1.5
             }, '<')
             .fromTo('.subtext', {
                 opacity: .5
@@ -157,6 +172,9 @@ export default function Hero() {
                     <p className="subtext">El arte del té, <br /> filtrado por la luz de los árboles.</p>
                     <Button />
                 </div>
+                <img className="tea-cup" src={teaCup} alt="tea-cup" draggable={false} />
+                <div className="fade-in"></div>
+                <div className="fade-out"></div>
             </section>
         </>
     )

@@ -5,7 +5,7 @@ import { useRef } from "react"
 import SplitText from "gsap/SplitText"
 import ScrollTrigger from "gsap/ScrollTrigger"
 import ScrollToPlugin from "gsap/ScrollToPlugin"
-import logo from '/icon.webp'
+import icon from '/icon.webp'
 
 gsap.registerPlugin(ScrollTrigger, SplitText, ScrollToPlugin)
 
@@ -168,7 +168,7 @@ export default function Nav() {
                     onFocus={onMouseEnter} 
                     onBlur={onMouseLeave}
                 >
-                    <img draggable={false} src={logo} alt="icon" />
+                    <img draggable={false} src={icon} alt="icon" />
                     <div className="relative">
                         <p className="font-japanese text-white">木漏れ日</p>
                         <p className="text-sm font-sakuna absolute top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] opacity-0">Komorebi</p>

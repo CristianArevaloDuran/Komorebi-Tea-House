@@ -14,11 +14,13 @@ body {
 @font-face {
     font-family: 'Sakuna';
     src: url('/fonts/SAKUNA.ttf') format('truetype');
+    font-display: block;
 }
 
 @font-face {
     font-family: 'Japanese';
     src: url('/fonts/Japanese.ttf') format('truetype');
+    font-display: block;
 }
 
 @theme {
@@ -98,6 +100,10 @@ body {
         .right-leaf {
             @apply right-[-100px] top-[20vh] rotate-290 scale-140;
         }
+
+        .tea-cup {
+            @apply bottom-[-300px] scale-70;
+        }
         
         h1 {
             @apply font-japanese font-bold text-9xl text-transparent tracking-[50px] !mr-[-50px];
@@ -131,6 +137,20 @@ body {
         .subtext {
             @apply font-quicksand tracking-[0] text-(--secondary-color) text-center text-2xl opacity-50 !mt-3 ;
         }
+
+        .fade-in {
+            @apply absolute top-0 w-full h-[100px];
+            background: linear-gradient(to top,rgba(0, 0, 0, 0) 0%, var(--primary-color) 100%)
+        }
+        
+        .fade-out {
+            @apply absolute bottom-0 w-full h-[100px];
+            background: linear-gradient(rgba(0, 0, 0, 0) 0%, var(--primary-color) 100%)
+        }
+    }
+
+    #about {
+        @apply relative;
         
     }
 }
