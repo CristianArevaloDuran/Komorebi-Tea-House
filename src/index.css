@@ -39,6 +39,16 @@ body {
 
 @layer components {
 
+    .fade-in {
+            @apply absolute top-0 w-full h-[100px] z-50;
+            background: linear-gradient(to top,rgba(0, 0, 0, 0) 0%, var(--primary-color) 100%)
+        }
+        
+    .fade-out {
+        @apply absolute bottom-0 w-full h-[100px] z-50;
+        background: linear-gradient(rgba(0, 0, 0, 0) 0%, var(--primary-color) 100%)
+    }
+    
     .texture {
         @apply relative isolate before:absolute before:w-full before:h-full before:-inset-0 before:opacity-30 before:bg-cover before:bg-repeat-y before:bg-top before:bg-[url('/textures/texture.webp')] before:z-[-1] ;
     }
@@ -138,19 +148,32 @@ body {
             @apply font-quicksand tracking-[0] text-(--secondary-color) text-center text-2xl opacity-50 !mt-3 ;
         }
 
-        .fade-in {
-            @apply absolute top-0 w-full h-[100px];
-            background: linear-gradient(to top,rgba(0, 0, 0, 0) 0%, var(--primary-color) 100%)
-        }
         
-        .fade-out {
-            @apply absolute bottom-0 w-full h-[100px];
-            background: linear-gradient(rgba(0, 0, 0, 0) 0%, var(--primary-color) 100%)
-        }
     }
 
     #about {
-        @apply relative;
+        @apply relative h-[100vh] w-full flex flex-row overflow-hidden;
+
+        .side-text {
+            @apply w-full h-full bg-(--primary-color) z-10 flex flex-col justify-center relative;
+            box-shadow: 20px 0px 20px 20px  var(--primary-color);
+
+            div {
+                @apply absolute top-[50%] w-full h-full flex flex-col items-center text-left;
+
+                p {
+                    @apply text-(--secondary-color) font-quicksand text-left w-[90%] text-5xl;
+                }
+            }
+        }
+
+        .side-video {
+            @apply w-full h-full z-5;
+
+            canvas {
+                @apply w-full h-full object-cover object-[30%_0%];
+            }
+        }
         
     }
 }
