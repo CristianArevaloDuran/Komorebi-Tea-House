@@ -40,7 +40,7 @@ export default function PageLoader({ onFinish, ready }) {
 
     return (
         <>
-            <div ref={containerRef} className="fixed inset-0 z-100 flex items-center justify-center bg-[#1a1a1a]">
+            <div ref={containerRef} className="fixed inset-0 z-100 flex items-center justify-center bg-(--accent-color)">
               <div className="text-white font-serif italic animate-pulse">
                 <p ref={textRef}>Komorabi Tea House...</p>
               </div>

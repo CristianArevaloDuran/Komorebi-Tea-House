@@ -1,9 +1,11 @@
-import Nav from "./components/Nav"
+import Nav from "./components/Nav";
 import Hero from "./components/Hero.jsx";
-import About from "./components/About.jsx";
 import PageLoader from "./components/PageLoader.jsx";
-import { useState } from "react"
+import { useState } from "react";
 import { useEffect } from "react";
+import { lazy } from "react";
+import { Suspense } from "react";
+const About = lazy(() => import('./components/About.jsx'));
 
 //Preload resources
 import imgTexture from "/textures/texture.webp";
@@ -18,6 +20,13 @@ export default function App() {
   const [showLoader, setShowLoader] = useState(true);
   const [contentLoaded, setContentLoaded] = useState(false);
   
+
+  //About section video animation setup
+  const frameCount = 300;
+  const currentFrame = (index) => 
+    `/Komorebi-Tea-House/videos/tea-video/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`;
+  const [images] = useState([])
+
   useEffect(() => {
     
     const prepareContent = async () => {
@@ -34,7 +43,28 @@ export default function App() {
           icon,
           teaCup
         ];
+
+
+        const videoFramesPromises = [];
+          for (let i = 0; i < frameCount; i++) {
+              const img = new Image();
+              img.src = currentFrame(i);
+              
+              // Creamos una promesa por cada frame
+              const framePromise = new Promise((resolve) => {
+                  img.onload = () => {
+                      images[i] = img; // Guardamos la imagen cargada en su posición exacta
+                      resolve();
+                  };
+                  img.onerror = () => {
+                      console.error(`Error cargando frame: ${i}`);
+                      resolve(); // Resolvemos de todos modos para no bloquear el loader infinito si falla uno
+                  };
+              });
+              videoFramesPromises.push(framePromise);
+        }
         
+ 
         const loadFonts = fontsToLoad.map(async font => {
           const loadedFont = await font.load();
           document.fonts.add(loadedFont);
@@ -50,7 +80,7 @@ export default function App() {
           });
         });
         
-        await Promise.all([...loadFonts, ...loadImages])
+        await Promise.all([...loadFonts, ...loadImages, ...videoFramesPromises])
 
         window.scrollTo(0, 0);
         setContentLoaded(true);
@@ -78,7 +108,9 @@ export default function App() {
           <>
             <Nav start={showLoader} />
             <Hero start={showLoader} />
-            <About />
+            <Suspense fallback={null}>
+              <About images={images} frameCount={frameCount} />
+            </Suspense>
           </>
         }
       </main>

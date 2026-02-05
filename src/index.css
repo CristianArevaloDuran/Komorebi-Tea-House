@@ -50,7 +50,7 @@ body {
     }
     
     .texture {
-        @apply relative isolate before:absolute before:w-full before:h-full before:-inset-0 before:opacity-30 before:bg-cover before:bg-repeat-y before:bg-top before:bg-[url('/textures/texture.webp')] before:z-[-1] ;
+        @apply relative isolate before:absolute before:w-full before:h-[400dvh] before:-inset-0 before:opacity-30 before:bg-cover before:bg-no-repeat before:bg-top before:bg-[url('/textures/texture.webp')] before:z-[-1] ;
     }
 
     main {
@@ -154,16 +154,20 @@ body {
     #about {
         @apply relative h-[100vh] w-full flex flex-row overflow-hidden;
 
-        .side-text {
-            @apply w-full h-full bg-(--primary-color) z-10 flex flex-col justify-center relative;
-            box-shadow: 20px 0px 20px 20px  var(--primary-color);
+        .side-container {
+            @apply relative w-full h-[100vh] flex items-center justify-center overflow-hidden bg-(--primary-color);
 
-            div {
-                @apply absolute top-[50%] w-full h-full flex flex-col items-center text-left;
+            .slide-text {
+                @apply absolute top-[50%] w-[80%] flex flex-col items-start gap-[50px];
+            }
 
-                p {
-                    @apply text-(--secondary-color) font-quicksand text-left w-[90%] text-5xl;
-                }
+            p {
+                @apply w-full text-5xl font-quicksand font-bold text-left text-(--secondary-color) opacity-10;
+                transition: all 0.3s ease;
+            }
+
+            .active {
+                @apply  opacity-100 font-bold;
             }
         }
 

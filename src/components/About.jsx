@@ -5,32 +5,23 @@ import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function About() {
+export default function About({frameCount, images}) {
 
     const sectionRef = useRef(null);
     const canvasRef = useRef(null);
 
-    const frameCount = 300;
-    const currentFrame = (index) => 
-        `/Komorebi-Tea-House/videos/tea-video/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
-
     useGSAP(()=> {
+        if(!images || !frameCount) return;
+
         const canvas = canvasRef.current;
         const context = canvas.getContext("2d");
         const videoData = {
             frame: 0
         };
 
-        const images = [];
-
-        for(let i = 0; i < frameCount; i++) {
-            const img = new Image();
-            img.src = currentFrame(i);
-            images.push(img);
-        }
-
         const render = () => {
             const img = images[Math.round(videoData.frame)];
+            
             if (img) {
                 context.clearRect(0, 0, canvas.width, canvas.height);
                  
@@ -38,6 +29,7 @@ export default function About() {
                 const vRatio = canvas.height / img.height;
                 const ratio = Math.max(hRatio, vRatio);
                 const centerShift_x = (canvas.width - img.width * ratio) / 2;
+                
                 const centerShift_y = (canvas.height - img.height * ratio) / 2;
                 
                 context.drawImage(
@@ -47,24 +39,70 @@ export default function About() {
             }
         };
 
+
         // 3. Timeline de GSAP
-        gsap.to(videoData, {
-            id: 'about',
-            frame: frameCount - 1,
-            snap: "frame",
-            ease: "none",
+        const aboutTl = gsap.timeline({
             scrollTrigger: {
+                id: 'about',
                 trigger: sectionRef.current,
                 start: "top top",
-                end: "+=500%", // Scroll de 2 pantallas de duración
+                end: "+=600%",
                 scrub: 1,
                 pin: true,
             },
-            onUpdate: render,
+            onUpdate: render
         });
 
+        
+        aboutTl 
+            .to(videoData, {
+                frame: frameCount - 1,
+                snap: "frame",
+                ease: "none",
+                duration: 1 // Duración relativa
+            });
+        
+        // Paragraphs animation 
+
+        const textContainerHeight = document.querySelector('.slide-text').offsetHeight;
+        const paragraphs = gsap.utils.toArray('.slide-text p');
+        const steps = textContainerHeight / paragraphs.length;
+        
+        const pTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top top",
+                end: "+=600%",
+                scrub: 1,
+                ease: 'back.out'
+            }
+        })
+
+        let step = 0;
+
+        paragraphs.forEach((p, i) => {
+            
+            const target = i === 0 ? 0 : -(step);
+            console.log(step, textContainerHeight);
+            
+            
+            pTl
+                .to('.slide-text', {
+                    y: target
+                }, i === 0 ? '<' : '>')
+                .to(p, {
+                    opacity: 1,
+                    onComplete: () => {
+                        p.classList.add('active')
+                    },
+                    duration: 0.5
+                }, '<')
+            
+            step += (p.offsetHeight + 50);
+        })
+    
         // Dibujar el primer frame al iniciar
-        images[0].onload = render;
+        if(images.length > 0) render();
 
         // Ajustar tamaño del canvas internamente
         const resize = () => {
@@ -77,7 +115,8 @@ export default function About() {
 
         return () => window.removeEventListener('resize', resize);
     }, {
-        scope: sectionRef
+        scope: sectionRef,
+        dependencies: [images]
     })
 
     return (
@@ -85,9 +124,9 @@ export default function About() {
             <section ref={sectionRef} id='about'>
                 <div className="fade-in"></div>
                 <div className="fade-out"></div>
-                <div className="side-text">
-                    <div>
-                        <p>El té es el lenguaje del alma en silencio.</p>
+                <div className="side-container">
+                    <div className="slide-text">
+                        <p className="active">El té es el lenguaje del alma en silencio.</p>
                         <p>En cada gota, el reflejo de un bosque que respira.</p>
                         <p>No buscamos la taza perfecta, sino el momento presente.</p>
                         <p>Nuestra ceremonia no es un acto, es una pausa necesaria en un mundo que corre.</p>

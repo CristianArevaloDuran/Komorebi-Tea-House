@@ -40,7 +40,7 @@ export default function Hero() {
                 duration: .5,
                 scale: .6,
                 autoAlpha: 0,
-                delay: 0.2,
+                delay: .5,
                 ease: 'back.out'
             })
             .from('.right-leaf', {
@@ -57,6 +57,18 @@ export default function Hero() {
                 scale: .4,
                 autoAlpha: 0,
                 ease: 'back.out'
+            }, '<')
+            .from('.fade-in', {
+                y: -100,
+                duration: .5,
+                scale: .4,
+                autoAlpha: 0
+            }, '<')
+            .from('.fade-out', {
+                y: 100,
+                duration: .5,
+                scale: .4,
+                autoAlpha: 0
             }, '<')
             .from(split.chars, {
                 y:100,
@@ -163,7 +175,7 @@ export default function Hero() {
 
     return (
         <>
-            <section ref={sectionRef} id="home" className={`hero`}>
+            <section ref={sectionRef} id="home" className={`hero `}>
                 <img className='left-leaf' src={teaLeaf1} alt="tea-leaf" draggable={false} />
                 <img className='right-leaf' src={teaLeaf2} alt="tea-leaf" draggable={false} />
                 <h1>木漏れ日</h1>
