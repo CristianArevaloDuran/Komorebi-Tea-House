@@ -1,7 +1,10 @@
-import { useGSAP } from "@gsap/react";
 import gsap from "gsap"
+import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger"
+
 import { useRef } from "react";
+
+import Button from "./elements/Button";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -64,10 +67,6 @@ export default function About({frameCount, images}) {
         
         // Paragraphs animation 
 
-        const textContainerHeight = document.querySelector('.slide-text').offsetHeight;
-        const paragraphs = gsap.utils.toArray('.slide-text p');
-        const steps = textContainerHeight / paragraphs.length;
-        
         const pTl = gsap.timeline({
             scrollTrigger: {
                 trigger: sectionRef.current,
@@ -77,14 +76,15 @@ export default function About({frameCount, images}) {
                 ease: 'back.out'
             }
         })
-
+        
+        const paragraphs = gsap.utils.toArray('.slide-text p');
         let step = 0;
-
+        
         paragraphs.forEach((p, i) => {
             
-            const target = i === 0 ? 0 : -(step);
-            console.log(step, textContainerHeight);
             
+            
+            const target = i === 0 ? 0 : -(step);
             
             pTl
                 .to('.slide-text', {
@@ -97,6 +97,13 @@ export default function About({frameCount, images}) {
                     },
                     duration: 0.5
                 }, '<')
+
+                if(i === (paragraphs.length - 1)) {
+                    pTl.to('button', {
+                        opacity: 1,
+                        duration: 0.5
+                    }, '<')
+                }
             
             step += (p.offsetHeight + 50);
         })
@@ -131,7 +138,8 @@ export default function About({frameCount, images}) {
                         <p>No buscamos la taza perfecta, sino el momento presente.</p>
                         <p>Nuestra ceremonia no es un acto, es una pausa necesaria en un mundo que corre.</p>
                         <p>De la tierra a la brasa, del agua al espíritu.</p>
-                        <p>Komorebi: Donde la luz baila entre las hojas y el tiempo se detiene.</p>
+                        <p><span>Komorebi:</span> Donde la luz baila entre las hojas y el tiempo se detiene.</p>
+                        <Button to={'#menu'} text={'Conoce el menú'} />
                     </div>
                 </div>
                 <div className="side-video">

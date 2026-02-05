@@ -48,6 +48,23 @@ body {
         @apply absolute bottom-0 w-full h-[100px] z-50;
         background: linear-gradient(rgba(0, 0, 0, 0) 0%, var(--primary-color) 100%)
     }
+
+    .animated-bt {
+        @apply relative font-quicksand font-bold bg-transparent text-(--secondary-color) border-(--third-color) border-4 !p-2 rounded-lg cursor-pointer !mt-5 transition-colors duration-200 ease-linear z-10 overflow-hidden;
+        box-shadow: 5px 5px  var(--secondary-color);
+    }
+
+    .animated-bt span {
+        @apply relative z-10;
+    }
+
+    .button-bg {
+        @apply absolute w-[20px] h-[20px] bg-(--third-color) z-1 rounded-[50%] pointer-events-none top-0 left-0 scale-0;
+    }
+
+    .animated-bt:hover {
+        @apply border-(--secondary-color);
+    }
     
     .texture {
         @apply relative isolate before:absolute before:w-full before:h-[400dvh] before:-inset-0 before:opacity-30 before:bg-cover before:bg-no-repeat before:bg-top before:bg-[url('/textures/texture.webp')] before:z-[-1] ;
@@ -125,23 +142,6 @@ body {
 
         .subtext-container {
             @apply flex flex-col justify-center items-center;
-
-            .animated-bt {
-                @apply relative font-quicksand font-bold bg-transparent text-(--secondary-color) border-(--third-color) border-4 !p-2 rounded-lg cursor-pointer !mt-5 transition-colors duration-200 ease-linear z-10 overflow-hidden;
-                box-shadow: 5px 5px  var(--secondary-color);
-            }
-
-            .animated-bt span {
-                @apply relative z-10;
-            }
-
-            .button-bg {
-                @apply absolute w-[20px] h-[20px] bg-(--third-color) z-1 rounded-[50%] pointer-events-none top-0 left-0 scale-0;
-            }
-
-            .animated-bt:hover {
-                @apply border-(--secondary-color);
-            }
         }
 
         .subtext {
@@ -155,19 +155,28 @@ body {
         @apply relative h-[100vh] w-full flex flex-row overflow-hidden;
 
         .side-container {
-            @apply relative w-full h-[100vh] flex items-center justify-center overflow-hidden bg-(--primary-color);
+            @apply relative w-full h-[100vh] flex items-center justify-center overflow-hidden bg-(--primary-color) z-50;
+            box-shadow: 5px 0px 30px 50px var(--primary-color);
 
             .slide-text {
                 @apply absolute top-[50%] w-[80%] flex flex-col items-start gap-[50px];
             }
 
             p {
-                @apply w-full text-5xl font-quicksand font-bold text-left text-(--secondary-color) opacity-10;
+                @apply w-full text-5xl font-quicksand font-bold text-left text-(--secondary-color) opacity-5;
                 transition: all 0.3s ease;
+                
+                span {
+                    @apply text-(--third-color) font-sakuna font-normal;
+                }
             }
 
+            button {
+                @apply self-center scale-150 opacity-5;
+            }            
+
             .active {
-                @apply  opacity-100 font-bold;
+                @apply  opacity-100;
             }
         }
 
@@ -179,5 +188,9 @@ body {
             }
         }
         
+    }
+
+    #menu {
+        @apply min-h-dvh w-full;
     }
 }

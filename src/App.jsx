@@ -1,11 +1,12 @@
+import { useState, lazy, useEffect, Suspense } from "react";
+
+//Import sections
 import Nav from "./components/Nav";
 import Hero from "./components/Hero.jsx";
 import PageLoader from "./components/PageLoader.jsx";
-import { useState } from "react";
-import { useEffect } from "react";
-import { lazy } from "react";
-import { Suspense } from "react";
+
 const About = lazy(() => import('./components/About.jsx'));
+const Menu = lazy(() => import('./components/Menu.jsx'));
 
 //Preload resources
 import imgTexture from "/textures/texture.webp";
@@ -110,6 +111,7 @@ export default function App() {
             <Hero start={showLoader} />
             <Suspense fallback={null}>
               <About images={images} frameCount={frameCount} />
+              <Menu />
             </Suspense>
           </>
         }

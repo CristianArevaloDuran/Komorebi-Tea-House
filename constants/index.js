@@ -8,6 +8,10 @@ const sections = [
         title: 'Filosofía',
     },
     {
+        id: 'menu',
+        title: 'Menú'
+    },
+    {
         id: 'contact',
         title: 'Contacto'
     }

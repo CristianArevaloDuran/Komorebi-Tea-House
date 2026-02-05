@@ -182,7 +182,7 @@ export default function Hero() {
                 <p className="subtitle">Komorebi Tea House</p>
                 <div className="subtext-container">
                     <p className="subtext">El arte del té, <br /> filtrado por la luz de los árboles.</p>
-                    <Button />
+                    <Button to={'#about'} text={'Conoce más'} />
                 </div>
                 <img className="tea-cup" src={teaCup} alt="tea-cup" draggable={false} />
                 <div className="fade-in"></div>

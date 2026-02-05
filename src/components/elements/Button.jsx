@@ -1,10 +1,12 @@
-import { useGSAP } from "@gsap/react"
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react"
+
 import { useRef } from "react"
 
-export default function Button() {
+export default function Button({to, text}) {
 
     const buttonRef = useRef(null);
+    const bgRef = useRef(null);
 
     const { contextSafe } = useGSAP({
         scope: buttonRef
@@ -12,19 +14,20 @@ export default function Button() {
     
     
     const handleMouseMove = contextSafe((e) => {
-        const btn = e.currentTarget;
-        
+        const btn = buttonRef.current;
+        const bg = bgRef.current;
+        if (!btn || !bg) return;
+
         const rect = btn.getBoundingClientRect();
         
-        const container = document.querySelector('.subtext-container');
+        // Calcula la escala comparando dimensiones visuales vs locales
+        const scaleX = rect.width / btn.offsetWidth || 1;
+        const scaleY = rect.height / btn.offsetHeight || 1;
         
-        const currentScale = gsap.getProperty(container, 'scale');
-        
-        const x = (e.clientX - rect.left) / currentScale;
-        const y = (e.clientY - rect.top) / currentScale;
-        
+        const x = (e.clientX - rect.left) / scaleX;
+        const y = (e.clientY - rect.top) / scaleY;
 
-        gsap.to('.button-bg', {
+        gsap.to(bg, {
             x: x,
             y: y,
             xPercent: -65,
@@ -34,14 +37,14 @@ export default function Button() {
     })
 
     const handleMouseEnter = contextSafe(() => {
-        gsap.to('.button-bg', {
+        gsap.to(bgRef.current, {
             scale: 20,
             duration: .5
         })
     })
 
     const handleMouseLeave = contextSafe(() => {
-        gsap.to('.button-bg', {
+        gsap.to(bgRef.current, {
             scale: 0,
             duration: .5
         })
@@ -51,7 +54,7 @@ export default function Button() {
         gsap.to(window, {
             duration: 1.5,
             scrollTo: {
-                y: '#about',
+                y: to,
                 autoKill: true
             }
         })
@@ -64,8 +67,8 @@ export default function Button() {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            <span>Conoce más</span>
-            <div className="button-bg"></div>
+            <span>{text}</span>
+            <div ref={bgRef} className="button-bg"></div>
         </button>
     )
 }
