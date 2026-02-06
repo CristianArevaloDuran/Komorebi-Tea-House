@@ -40,12 +40,12 @@ body {
 @layer components {
 
     .fade-in {
-            @apply absolute top-0 w-full h-[100px] z-50;
+            @apply absolute top-0 w-full h-[100px] z-50 pointer-events-none;
             background: linear-gradient(to top,rgba(0, 0, 0, 0) 0%, var(--primary-color) 100%)
         }
         
     .fade-out {
-        @apply absolute bottom-0 w-full h-[100px] z-50;
+        @apply absolute bottom-0 w-full h-[100px] z-50 pointer-events-none;
         background: linear-gradient(rgba(0, 0, 0, 0) 0%, var(--primary-color) 100%)
     }
 
@@ -191,6 +191,36 @@ body {
     }
 
     #menu {
-        @apply min-h-dvh w-full;
+        @apply min-h-dvh w-full flex flex-col items-center;
+
+        .title {
+            @apply flex flex-row w-full justify-between items-center !mt-40 !px-20;
+
+            .jap-title {
+                @apply font-japanese text-5xl text-(--third-color);
+                text-shadow: 3px 3px var(--secondary-color);
+            }
+
+            .esp-title {
+                @apply font-quicksand font-bold text-4xl text-(--secondary-color)
+            }
+        }
+
+        .menu-container {
+            @apply w-[120%] h-full flex flex-row !my-20 gap-5;
+
+            .product {
+                @apply relative w-full min-h-full flex flex-col items-center justify-center bg-(--secondary-color);
+
+                img {
+                    @apply h-full object-cover;
+                }
+
+                p {
+                    @apply absolute bottom-0 w-full text-center text-(--secondary-color) font-bold font-quicksand !py-5;
+                    background: linear-gradient(0deg, var(--primary-color) 0%, rgba(255, 255, 255, 0) 100%);
+                }
+            }
+        }
     }
 }

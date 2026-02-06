@@ -111,8 +111,8 @@ export default function App() {
             <Hero start={showLoader} />
             <Suspense fallback={null}>
               <About images={images} frameCount={frameCount} />
-              <Menu />
             </Suspense>
+              <Menu />
           </>
         }
       </main>

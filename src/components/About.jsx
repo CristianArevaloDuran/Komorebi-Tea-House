@@ -139,7 +139,7 @@ export default function About({frameCount, images}) {
                         <p>Nuestra ceremonia no es un acto, es una pausa necesaria en un mundo que corre.</p>
                         <p>De la tierra a la brasa, del agua al espíritu.</p>
                         <p><span>Komorebi:</span> Donde la luz baila entre las hojas y el tiempo se detiene.</p>
-                        <Button to={'#menu'} text={'Conoce el menú'} />
+                        <Button to={'#menu'} text={'Conoce los productos'} />
                     </div>
                 </div>
                 <div className="side-video">
