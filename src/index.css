@@ -207,7 +207,7 @@ body {
         }
 
         .menu-container {
-            @apply w-[120%] h-full flex flex-row !my-20 gap-5;
+            @apply w-[120%] h-full flex flex-row !my-20 gap-5 overflow-hidden;
 
             .product {
                 @apply relative w-full min-h-full flex flex-col items-center justify-center bg-(--secondary-color);
